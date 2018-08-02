@@ -43,7 +43,7 @@ Access http://localhost:8080/api/products in web browser or PostMan, you should 
 ```
 
 # Portfolio
-Read portfolio [Game Store(Angular)](http://jojozhuang.github.io/portfolio/game-store-angular/) or [Game Store(React)](http://jojozhuang.github.io/portfolio/game-store-react/) to learn how these RESTful APIs are consumed by Angular and React applications.
+Read portfolio [Game Store(Angular)](https://jojozhuang.github.io/portfolio/game-store-angular/) or [Game Store(React)](http://jojozhuang.github.io/portfolio/game-store-react/) to learn how these RESTful APIs are consumed by Angular and React applications.
 
 # Tutorial
-Read tutorial [Building RESTful APIs with Spring Boot](http://jojozhuang.github.io/tutorial/react/building-restful-apis-with-spring-boot/) to learn how this RESTful API is built.
+Read tutorial [Building RESTful APIs with Spring Boot](https://jojozhuang.github.io/tutorial/react/building-restful-apis-with-spring-boot/) to learn how this RESTful API is built.
