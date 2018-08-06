@@ -3,7 +3,6 @@ package johnny.tutorial.restfulspringboot.controller;
 import johnny.tutorial.restfulspringboot.domain.ResponseResult;
 import johnny.tutorial.restfulspringboot.domain.UploadModel;
 import johnny.tutorial.restfulspringboot.service.FileStorageService;
-import johnny.tutorial.restfulspringboot.util.UrlUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/upload")
-public class UploadController {
+public class UploadController extends BaseController {
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -40,7 +39,7 @@ public class UploadController {
 
         try {
             String[] fileUrls = saveUploadedFiles(Arrays.asList(uploadfile));
-            rr.setMessage(UrlUtil.getBaseEnvLinkURL() + fileUrls[0]);
+            rr.setMessage(getApiUrl() + fileUrls[0]);
         } catch (IOException e) {
             return ResponseEntity.badRequest().build();
         }

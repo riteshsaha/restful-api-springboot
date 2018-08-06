@@ -20,17 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import johnny.tutorial.restfulspringboot.domain.Product;
 import johnny.tutorial.restfulspringboot.repository.ProductRepository;
-import johnny.tutorial.restfulspringboot.util.UrlUtil;
 
 @RestController
 @RequestMapping("/api/products")
-public class ProductController {
-    ProductRepository productRepository;
-
+public class ProductController extends BaseController{
     @Autowired
-    public ProductController(ProductRepository productRepository){
-        this.productRepository = productRepository;
-    }
+    ProductRepository productRepository;
 
     // GET /products
     @GetMapping("")
@@ -39,7 +34,7 @@ public class ProductController {
         Iterator<Product> iterator = productRepository.findAll().iterator();
         //iterator.forEachRemaining(products::add);
         iterator.forEachRemaining(product -> {
-            product.setImage(UrlUtil.getBaseEnvLinkURL() + product.getImage());
+            product.setImage(getApiUrl() + product.getImage());
             products.add(product);
         });
         Collections.reverse(products);
@@ -53,14 +48,14 @@ public class ProductController {
         if(product == null) {
             return ResponseEntity.notFound().build();
         }
-        product.setImage(UrlUtil.getBaseEnvLinkURL() + product.getImage());
+        product.setImage(getApiUrl() + product.getImage());
         return ResponseEntity.ok().body(product);
     }
 
     // POST /products
     @PostMapping("")
     public ResponseEntity<Product> create(@Valid @RequestBody Product product){
-        product.setImage(product.getImage().replace(UrlUtil.getBaseEnvLinkURL(), ""));
+        product.setImage(product.getImage().replace(getApiUrl(), ""));
         Product newProduct = productRepository.save(product);
         return ResponseEntity.ok(newProduct);
     }
@@ -75,7 +70,7 @@ public class ProductController {
         }
         oldProduct.setProductName(product.getProductName());
         oldProduct.setPrice(product.getPrice());
-        oldProduct.setImage(product.getImage().replace(UrlUtil.getBaseEnvLinkURL(), ""));
+        oldProduct.setImage(product.getImage().replace(getApiUrl(), ""));
 
         Product updProduct = productRepository.save(oldProduct);
         return ResponseEntity.ok(updProduct);

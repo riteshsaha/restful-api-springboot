@@ -8,7 +8,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class UrlUtil {
     public static String getBaseEnvLinkURL() {
-        String baseEnvLinkURL=null;
+        String baseEnvLinkURL = null;
         HttpServletRequest currentRequest = 
            ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
         baseEnvLinkURL = "http://" + currentRequest.getLocalName();
@@ -18,6 +18,7 @@ public class UrlUtil {
         if(!StringUtils.isEmpty(currentRequest.getContextPath())) {
             baseEnvLinkURL += currentRequest.getContextPath();
         }
+        
         return baseEnvLinkURL;
     }
 }

@@ -8,11 +8,13 @@ import org.springframework.context.annotation.Bean;
 
 import johnny.tutorial.restfulspringboot.domain.Product;
 import johnny.tutorial.restfulspringboot.property.FileStorageProperties;
+import johnny.tutorial.restfulspringboot.property.ApiUrlProperties;
 import johnny.tutorial.restfulspringboot.repository.ProductRepository;
 
 @SpringBootApplication
 @EnableConfigurationProperties({
-    FileStorageProperties.class
+    FileStorageProperties.class,
+    ApiUrlProperties.class
 })
 public class RestApplication {
 
