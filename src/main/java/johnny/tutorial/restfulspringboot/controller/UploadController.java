@@ -2,6 +2,10 @@ package johnny.tutorial.restfulspringboot.controller;
 
 import johnny.tutorial.restfulspringboot.domain.ResponseResult;
 import johnny.tutorial.restfulspringboot.domain.UploadModel;
+import johnny.tutorial.restfulspringboot.service.FileStorageService;
+import johnny.tutorial.restfulspringboot.util.UrlUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -10,26 +14,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/upload")
 public class UploadController {
 
-    String IMAGE_FOLDER = "./src/main/resources/images/";
-
+    @Autowired
+    private FileStorageService fileStorageService;
+    
     // 3.1.1 Single file upload
     @PostMapping("")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
@@ -42,7 +40,7 @@ public class UploadController {
 
         try {
             String[] fileUrls = saveUploadedFiles(Arrays.asList(uploadfile));
-            rr.setMessage(fileUrls[0]);
+            rr.setMessage(UrlUtil.getBaseEnvLinkURL() + fileUrls[0]);
         } catch (IOException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -95,31 +93,11 @@ public class UploadController {
             if (file.isEmpty()) {
                 continue;
             }
-
-            byte[] bytes = file.getBytes();
-            long TICKS_AT_EPOCH = 621355968000000000L; 
-            long tick = System.currentTimeMillis()*10000 + TICKS_AT_EPOCH;
-            String filename = String.valueOf(tick).concat("_").concat(file.getOriginalFilename());
-
-            Path path = Paths.get(IMAGE_FOLDER+filename);
-            Files.write(path, bytes);
-            fileUrls[index] = getBaseEnvLinkURL() + "/images/"+filename;
+            
+            fileUrls[index] = fileStorageService.storeFile(file);
             index++;
         }
         return fileUrls;
     }
 
-    protected String getBaseEnvLinkURL() {
-        String baseEnvLinkURL=null;
-        HttpServletRequest currentRequest = 
-           ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        baseEnvLinkURL = "http://" + currentRequest.getLocalName();
-        if(currentRequest.getLocalPort() != 80) {
-            baseEnvLinkURL += ":" + currentRequest.getLocalPort();
-        }
-        if(!StringUtils.isEmpty(currentRequest.getContextPath())) {
-            baseEnvLinkURL += currentRequest.getContextPath();
-        }
-        return baseEnvLinkURL;
-    }
 }

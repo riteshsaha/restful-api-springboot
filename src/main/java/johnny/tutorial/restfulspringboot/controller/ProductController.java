@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import johnny.tutorial.restfulspringboot.domain.Product;
 import johnny.tutorial.restfulspringboot.repository.ProductRepository;
+import johnny.tutorial.restfulspringboot.util.UrlUtil;
 
 @RestController
 @RequestMapping("/api/products")
@@ -36,7 +37,11 @@ public class ProductController {
     public Iterable<Product> findAll(){
         List<Product> products = new ArrayList<>();
         Iterator<Product> iterator = productRepository.findAll().iterator();
-        iterator.forEachRemaining(products::add);
+        //iterator.forEachRemaining(products::add);
+        iterator.forEachRemaining(product -> {
+            product.setImage(UrlUtil.getBaseEnvLinkURL() + product.getImage());
+            products.add(product);
+        });
         Collections.reverse(products);
         return products;
     }
@@ -48,12 +53,14 @@ public class ProductController {
         if(product == null) {
             return ResponseEntity.notFound().build();
         }
+        product.setImage(UrlUtil.getBaseEnvLinkURL() + product.getImage());
         return ResponseEntity.ok().body(product);
     }
 
     // POST /products
     @PostMapping("")
     public ResponseEntity<Product> create(@Valid @RequestBody Product product){
+        product.setImage(product.getImage().replace(UrlUtil.getBaseEnvLinkURL(), ""));
         Product newProduct = productRepository.save(product);
         return ResponseEntity.ok(newProduct);
     }
@@ -68,7 +75,7 @@ public class ProductController {
         }
         oldProduct.setProductName(product.getProductName());
         oldProduct.setPrice(product.getPrice());
-        oldProduct.setImage(product.getImage());
+        oldProduct.setImage(product.getImage().replace(UrlUtil.getBaseEnvLinkURL(), ""));
 
         Product updProduct = productRepository.save(oldProduct);
         return ResponseEntity.ok(updProduct);

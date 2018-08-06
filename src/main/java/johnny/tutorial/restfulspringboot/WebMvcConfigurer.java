@@ -7,8 +7,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations(
-            "file:./src/main/resources/"
+        registry.addResourceHandler("/public/**").addResourceLocations(
+            "file:./public/"
+        );
+        registry.addResourceHandler("/images/**").addResourceLocations(
+            "file:./src/main/resources/images/"
         );
     }
 }
