@@ -54,4 +54,4 @@ For example, call https://gamestore-api.herokuapp.com/api/products to get all pr
 Read portfolio [Game Store(Angular)](https://jojozhuang.github.io/portfolio/game-store-angular/) or [Game Store(React)](http://jojozhuang.github.io/portfolio/game-store-react/) to learn how these RESTful APIs are consumed by Angular and React applications.
 
 # Tutorial
-Read tutorial [Building RESTful APIs with Spring Boot](https://jojozhuang.github.io/tutorial/react/building-restful-apis-with-spring-boot/) to learn how this RESTful API is built.
+Read tutorial [Building RESTful API with Spring Boot](https://jojozhuang.github.io/tutorial/restful/building-restful-api-with-spring-boot/) to learn how this RESTful API is built.
