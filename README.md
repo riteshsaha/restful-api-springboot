@@ -43,12 +43,14 @@ Access http://localhost:8080/api/products in web browser or PostMan, you should 
 ```
 
 # Deploy to Heroku
-Follow tutorial [Deploying Spring Boot RESTful API to Heroku](https://jojozhuang.github.io/tutorial/restful/deploying-spring-boot-restful-api-to-heroku/) to deploy it to [Heroku](https://www.heroku.com/).
+Follow tutorial [Deploying Spring Boot RESTful API to Heroku](https://jojozhuang.github.io/tutorial/restful/deploying-spring-boot-restful-api-to-heroku/) to deploy this Spring Boot app to [Heroku](https://www.heroku.com/).
+
+Follow tutorial [Continuously Deploy Spring Boot App to Heroku with Travis-CI](https://jojozhuang.github.io/tutorial/restful/continuously-deploy-spring-boot-app-to-heroku-with-travis-ci/) to continuously deploy this Spring Boot app to [Heroku](https://www.heroku.com/) with [Travis-CI](https://travis-ci.com/).
 
 The available RESTful API on Heroku is
 * baseURL: https://gamestore-api.herokuapp.com/
 
-For example, call https://gamestore-api.herokuapp.com/api/products to get all products.
+For example, request https://gamestore-api.herokuapp.com/api/products to get all products.
 
 # Portfolio
 Read portfolio [Game Store(Angular)](https://jojozhuang.github.io/portfolio/game-store-angular/) or [Game Store(React)](http://jojozhuang.github.io/portfolio/game-store-react/) to learn how these RESTful APIs are consumed by Angular and React applications.
